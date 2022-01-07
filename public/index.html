@@ -1,22 +1,134 @@
 <!DOCTYPE html>
 <html lang="en-us">
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Moonland Estates</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-    <script src="TemplateData/UnityProgress.javascript"></script>
-    <script src="%UNITY_WEBGL_LOADER_URL%"></script>
-    <script>
-        var gameInstance = UnityLoader.instantiate("gameContainer", "%UNITY_WEBGL_BUILD_URL%", {onProgress: UnityProgress});
-    </script>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Unity WebGL Player | DeleteThisWebGLMultiThreadWorks2</title>
+  <link rel="shortcut icon" href="TemplateData/favicon.ico">
+  <link rel="stylesheet" href="TemplateData/style.css">
+  <style>
+    .loader {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 999;
+      width: 120px;
+      height: 120px;
+      margin: -76px 0 0 -76px;
+      border: 16px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 16px solid #babfc2;
+      -webkit-animation: spin 2s linear infinite;
+      animation: spin 2s linear infinite;
+    }
+
+    /* Safari */
+
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* new rules ********/
+
+    #unity-container {
+      width: 97vw;
+      height: 90vh;
+      border: 3px solid orange;
+      background-color: gray;
+    }
+
+    #fullScreenContainer {
+      position: relative;
+      height: 100%;
+      width: 100%;
+    }
+
+    #unity-canvas {
+      background-color: black;
+      /* note the dimensions are in percentages */
+      /* they'll scale with parent, as parent goes fullscreen*/
+      /* the canvas will grow as well*/
+      width: 100%;
+      height: 100%;
+      margin: 0 auto;
+    }
+
+    #unity-fullscreen-button {
+      border: 1px solid black;
+      width: fit-content;
+      color: Orange;
+      font-size: 2em;
+    }
+
+    #unity-fullscreen-button:hover {
+      background-color: lightgreen;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  </style>
 </head>
+
 <body>
-<div class="webgl-content">
-    <div id="gameContainer" style="width: %UNITY_WIDTH%px; height: %UNITY_HEIGHT%px"></div>
-</div>
-<div class="simmer">template by: <a href="https://simmer.io" target="_blank">SIMMER.io</a></div>
-<script src="TemplateData/responsive.javascript"></script>
+  <div id="unity-container" class="unity-desktop">
+
+    <!-- take this container fullscreen instead of taking only the canvas -->
+    <div id="fullScreenContainer">
+      <div id="modelLoading" class="loader"></div>
+      <canvas id="unity-canvas"></canvas>
+    </div>
+
+    <div id="unity-footer">
+      <div id="unity-fullscreen-button">FullScreen</div>
+    </div>
+  </div>
+  <script>
+    var container = document.querySelector("#unity-container");
+    var fullContainer = document.querySelector("#fullScreenContainer");
+    var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+
+    fullscreenButton.onclick = () => {
+      //don't request fullscreen on unityinstance
+      //unityInstance.SetFullscreen(1);
+
+      //let's take things fullscreen ourselves
+      //request fullscreen on the wrapper
+      fullContainer.requestFullscreen();
+      //you might want to resize canvas to fit screen.
+
+    };
+
+    //ignore this just for the demo
+    var canvas = document.getElementById("unity-canvas");
+    var ctx = canvas.getContext("2d");
+    ctx.font = "bold 24px verdana, sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "green";
+    ctx.fillText("The Game", 150, 80);
+
+    ctx.closePath();
+  </script>
 </body>
+
 </html>
