@@ -1,134 +1,83 @@
 <!DOCTYPE html>
 <html lang="en-us">
-
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Unity WebGL Player | DeleteThisWebGLMultiThreadWorks2</title>
-  <link rel="shortcut icon" href="TemplateData/favicon.ico">
-  <link rel="stylesheet" href="TemplateData/style.css">
-  <style>
-    .loader {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      z-index: 999;
-      width: 120px;
-      height: 120px;
-      margin: -76px 0 0 -76px;
-      border: 16px solid #f3f3f3;
-      border-radius: 50%;
-      border-top: 16px solid #babfc2;
-      -webkit-animation: spin 2s linear infinite;
-      animation: spin 2s linear infinite;
-    }
-
-    /* Safari */
-
-    @-webkit-keyframes spin {
-      0% {
-        -webkit-transform: rotate(0deg);
-      }
-
-      100% {
-        -webkit-transform: rotate(360deg);
-      }
-    }
-
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-
-    /* new rules ********/
-
-    #unity-container {
-      width: 97vw;
-      height: 90vh;
-      border: 3px solid orange;
-      background-color: gray;
-    }
-
-    #fullScreenContainer {
-      position: relative;
-      height: 100%;
-      width: 100%;
-    }
-
-    #unity-canvas {
-      background-color: black;
-      /* note the dimensions are in percentages */
-      /* they'll scale with parent, as parent goes fullscreen*/
-      /* the canvas will grow as well*/
-      width: 100%;
-      height: 100%;
-      margin: 0 auto;
-    }
-
-    #unity-fullscreen-button {
-      border: 1px solid black;
-      width: fit-content;
-      color: Orange;
-      font-size: 2em;
-    }
-
-    #unity-fullscreen-button:hover {
-      background-color: lightgreen;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-  </style>
-</head>
-
-<body>
-  <div id="unity-container" class="unity-desktop">
-
-    <!-- take this container fullscreen instead of taking only the canvas -->
-    <div id="fullScreenContainer">
-      <div id="modelLoading" class="loader"></div>
-      <canvas id="unity-canvas"></canvas>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Moonland Estates</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+  </head>
+  <body>
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas" width=1280 height=720></canvas>
+      <div id="unity-loading-bar">
+        <div id="unity-logo"></div>
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+      </div>
+      <div id="unity-footer">
+        <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title">Moonland Estates</div>
+      </div>
     </div>
+    <script>
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/public.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/public.data.unityweb",
+        frameworkUrl: buildUrl + "/public.framework.js.unityweb",
+        codeUrl: buildUrl + "/public.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "Moonland Estates",
+        productVersion: "0.1",
+      };
 
-    <div id="unity-footer">
-      <div id="unity-fullscreen-button">FullScreen</div>
-    </div>
-  </div>
-  <script>
-    var container = document.querySelector("#unity-container");
-    var fullContainer = document.querySelector("#fullScreenContainer");
-    var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var mobileWarning = document.querySelector("#unity-mobile-warning");
 
-    fullscreenButton.onclick = () => {
-      //don't request fullscreen on unityinstance
-      //unityInstance.SetFullscreen(1);
+      // By default Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
 
-      //let's take things fullscreen ourselves
-      //request fullscreen on the wrapper
-      fullContainer.requestFullscreen();
-      //you might want to resize canvas to fit screen.
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = "unity-mobile";
+        // Avoid draining fillrate performance on mobile devices,
+        // and default/override low DPI mode on mobile browsers.
+        config.devicePixelRatio = 1;
+        mobileWarning.style.display = "block";
+        setTimeout(() => {
+          mobileWarning.style.display = "none";
+        }, 5000);
+      } else {
+        canvas.style.width = "1280px";
+        canvas.style.height = "720px";
+      }
+      loadingBar.style.display = "block";
 
-    };
-
-    //ignore this just for the demo
-    var canvas = document.getElementById("unity-canvas");
-    var ctx = canvas.getContext("2d");
-    ctx.font = "bold 24px verdana, sans-serif";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillStyle = "green";
-    ctx.fillText("The Game", 150, 80);
-
-    ctx.closePath();
-  </script>
-</body>
-
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+  </body>
 </html>
