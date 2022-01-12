@@ -13,20 +13,22 @@
 		<div id="gameContainer" class="unity-desktop webgl-content">
 			<button id="fullScreenButton" onclick="ToggleFullScreen()"></button>
 			<canvas id="gameCanvas"></canvas>
+			
+			<section style="position: fixed; bottom: 10px; width: 100%;"></section>
 			<div id="loadingBlock">
-				<div class="centered">
+				<div id="progressBar">
+					<!-- <div class="centered"> -->
+						<div id="emptyBar"></div>
+						<div id="fullBar"></div>
+					</div>
+				</div>
+			</section>
+				<!-- <div class="centered"> -->
+					
 				<!-- <img class="logo" src="TemplateData/img/Logo.png"></img> -->
 				<!-- <span class="subtitle"> Moonland Estates <br> -->
 				<!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. -->
 				<!-- </span> -->
-			</div>
-			
-				<div id="progressBar">
-	
-					<div class="centered">
-						<div id="emptyBar"></div>
-						<div id="fullBar"></div>
-					</div>
 				</div>
 				
 				<div id="warningBrowserBlock" style="display:none;">

@@ -58,6 +58,7 @@ body{
 	width:auto;
 	display: block;
 	margin:auto;
+	z-index: -1;
 	margin-top:2vh;
 }
 
@@ -68,46 +69,46 @@ body{
 
 #emptyBar{
 	background: url("../img/progressEmpty.png") no-repeat right;
-	float: right; 
+	/* float: right;  */
 	width: 60%; 
 	height: 100%; 
-	position:absolute;
-	z-index:1;
-	bottom:160px;
-	left:330px;
+	width: 600px;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    margin-left: -300px;
 	display: inline-block;
 }
 
 #fullBar{
 	background: url("../img/progressFull.png") no-repeat right;
-	float: left; 
+	/* float: left;  */
 	width: 40%; 
 	height: 100%; 
-	position:absolute;
-	z-index:1;
-	bottom:160px;
-	left:330px;
+	width: 600px;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    margin-left: -300px;
 	display: inline-block;
 }
 
 #progressBar,#warningBrowserBlock,#warningMobileBlock,#errorContent{
 	height:25vh;
 	width:40vw;
-	position:absolute;
-	z-index:1;
-	bottom:160px;
-	left:330px;
 	margin:auto;
 	text-align: center;
 }
 
 #progressBar{
 	height:8vh;
+	position: fixed; 
+  	left: 0; 
+	right: 0; 
+ 	margin-left: auto; 
+	margin-right: auto; 
+  	width: 1000px;
 	color:#FFFFFF;
-	position:absolute;
-	z-index:1;
-	bottom:160px;
-	left:330px;
 	font-size:4vh;
 }
 
