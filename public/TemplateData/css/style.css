@@ -69,27 +69,17 @@ body{
 
 #emptyBar{
 	background: url("../img/progressEmpty.png") no-repeat right;
-	/* float: right;  */
+	float: right; 
 	width: 60%; 
 	height: 100%; 
-	width: 600px;
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    margin-left: -300px;
 	display: inline-block;
 }
 
 #fullBar{
 	background: url("../img/progressFull.png") no-repeat right;
-	/* float: left;  */
+	float: left; 
 	width: 40%; 
 	height: 100%; 
-	width: 600px;
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    margin-left: -300px;
 	display: inline-block;
 }
 
@@ -102,12 +92,6 @@ body{
 
 #progressBar{
 	height:8vh;
-	position: fixed; 
-  	left: 0; 
-	right: 0; 
- 	margin-left: auto; 
-	margin-right: auto; 
-  	width: 1000px;
 	color:#FFFFFF;
 	font-size:4vh;
 }
