@@ -7,7 +7,7 @@ body{
 	background-size:cover;
 	font-style: regular;
 	font-family:"Myriad Pro", Myriad,"Helvetica Neue", Helvetica, Arial, sans-serif;
-	background-color:#f0f0f1;
+	background-color:#000000;
 }
 
 .webgl-content,#loadingBlock,#errorBrowserBlock{
@@ -71,6 +71,10 @@ body{
 	float: right; 
 	width: 60%; 
 	height: 100%; 
+	position:absolute;
+	z-index:1;
+	bottom:160px;
+	left:330px;
 	display: inline-block;
 }
 
@@ -79,19 +83,31 @@ body{
 	float: left; 
 	width: 40%; 
 	height: 100%; 
+	position:absolute;
+	z-index:1;
+	bottom:160px;
+	left:330px;
 	display: inline-block;
 }
 
 #progressBar,#warningBrowserBlock,#warningMobileBlock,#errorContent{
 	height:25vh;
 	width:40vw;
+	position:absolute;
+	z-index:1;
+	bottom:160px;
+	left:330px;
 	margin:auto;
 	text-align: center;
 }
 
 #progressBar{
 	height:8vh;
-	color:#666666;
+	color:#FFFFFF;
+	position:absolute;
+	z-index:1;
+	bottom:160px;
+	left:330px;
 	font-size:4vh;
 }
 
