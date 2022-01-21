@@ -112,6 +112,7 @@
 				document.getElementById("warningBrowserBlock").style.display = "inherit";
 			}
 		}
+
 		
 		function hasWebGL() {
 			var supported;
@@ -127,6 +128,11 @@
 			canvas = undefined;
 			return supported;
 		}
+
+			var loc = window.location.href+'';
+			if (loc.indexOf('http://')==0){
+    		window.location.href = loc.replace('http://','https://');
+}
 
 		var isFirefox = typeof InstallTrigger !== 'undefined';
 		var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
@@ -146,7 +152,7 @@
         frameworkUrl: buildUrl + "/public.framework.js.unityweb",
         codeUrl: buildUrl + "/public.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
+        companyName: "Moonland",
         productName: "Moonland Estates",
         productVersion: "0.1",
       };
