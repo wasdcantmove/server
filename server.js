@@ -7,10 +7,15 @@ var app      = express();// create an object of the express module
 var http     = require('http').Server(app);// create a http web server using the http library
 var io       = require('socket.io')(http);// import socketio communication module
 
-
 app.use("/public/TemplateData",express.static(__dirname + "/public/TemplateData"));
 app.use("/public/Build",express.static(__dirname + "/public/Build"));
-app.use(express.static(__dirname+'/public'));
+app.use(express.static(__dirname+'/public', {
+    setHeaders: function(res, path) {
+        if(path.endsWith(".unityweb")){
+            res.set("Content-Encoding", "gzip");
+        }
+    }
+}));
 
 var clients			= [];// to storage clients
 var clientLookup = {};// clients search engine
